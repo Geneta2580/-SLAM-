@@ -1,0 +1,52 @@
+\ExplSyntaxOn
+\cs_generate_variant:Nn \fp_set:Nn { NV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV }
+\ExplSyntaxOff
+
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, appendix, bm, graphicx, hyperref, mathrsfs, geometry, indentfirst, graphicx, diagbox}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=3cm}  % 修改页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+\titleformat{\section}[block]{\Large\bfseries}{\zhnum{section}.}{1em}{}[] 
+% \zhum中文编号 \arabic 数字编号
+
+\title{\vspace{-4cm}\bfseries{CH5 HOMEWORK}}
+\author{\large 庞骏翔 \quad ZY2417209}  % \quad 空格一个字符 \large 小四 \bfseries 黑体
+\date{}
+\linespread{1.5}  % 修改行距
+\setlength{\parindent}{2em} % 段首缩进两字符
+\begin{document}
+	
+	\pagestyle{plain}
+	\maketitle
+	\section{2 ORB特征点}
+	
+	1、ORB提取
+	
+	2、ORB描述
+	注意这里p、q取的是相对坐标，应对$p^{'}$、$q^{'}$做边界检测
+	
+	3、暴力匹配
+	
+	见GenetaSLAM Project homework ch5 computeORB
+	
+	\section{3 从E恢复R、t}
+	
+	见GenetaSLAM Project homework ch5 E2Rt
+	
+	\section{4 GN实现Bundle Adjustment}
+	
+	见GenetaSLAM Project homework ch5 GN-BA
+	
+	\section{5 ICP实现轨迹对齐}
+
+	见GenetaSLAM Project homework ch5 ICP
+	
+\end{document}

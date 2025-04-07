@@ -1,0 +1,76 @@
+\ExplSyntaxOn
+\cs_generate_variant:Nn \fp_set:Nn { NV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV }
+\ExplSyntaxOff
+
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, appendix, bm, graphicx, hyperref, mathrsfs, geometry, indentfirst, graphicx, diagbox}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=3cm}  % 修改页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+\titleformat{\section}[block]{\Large\bfseries}{\zhnum{section}.}{1em}{}[] 
+% \zhum中文编号 \arabic 数字编号
+
+\title{\vspace{-4cm}\bfseries{CH6 HOMEWORK}}
+\author{\large 庞骏翔 \quad ZY2417209}  % \quad 空格一个字符 \large 小四 \bfseries 黑体
+\date{}
+\linespread{1.5}  % 修改行距
+\setlength{\parindent}{2em} % 段首缩进两字符
+\begin{document}
+	
+	\pagestyle{plain}
+	\maketitle
+	\section{2 LK光流}
+	
+	1、光流文献综述
+	(1)光流法分为additive和compositional，forwards和inverse
+	(2)应该是warp，疑似是为了更好近似图像物理层面的扭曲
+	(3)forward没啥好多说的，就是一般优化的流程，给出误差目标函数，根据变量对误差进行求导，然后找到使误差最小的变量变化量，
+	inverse的动机在于，forward每次计算导数时，都会需要重新计算一个H（海塞）矩阵，这样做的计算量相当大，能否找到一种等价方式，使计算导数并更新时，H阵近似于一个常数阵（当然由于求导更新中其它差值变量得存在，求导求差的过程不会被这个常值阵给吃掉），inverse这里交换了模板和图像的角色（交换前一时刻和后一时刻的顺序），导致求导等于0之后H的封闭解形式和自变量无关，可以近似成一个常值阵的形式，非常妙，但是对应的，对仿射变换的W矩阵有一定的要求
+	
+	2、forward-addtive G-N光流实现
+	(1)前一时刻的像素灰度值和后一时刻窗口内（以前一时刻像素点为中心）像素灰度值之差的平方之和
+	(2)和雅可比矩阵有关，直接对自变量求导，保留p即可，矩阵中肯定是包含x、y方向上的像素梯度的内容的
+	
+	3、反向法
+	
+	4、推广至金字塔
+	(1)是指先从金字塔的最上层，也就是尺寸最小的图片进行光流的计算，对从底层提取的特征点坐标进行相应放缩，然后根据放缩后的特征点窗口进行灰度差值计算，进行优化，得出在第二张图中的光流以及特征点，然后像这样逐层下降即为coarse-to-fine的过程
+	(2)特征点法的金字塔是为了解决特征点尺度不变性的问题，所以匹配不同层上的图像，实现尺度不变性
+	而光流法的金字塔是为了解决若相机运动较快，则两张图像差异明显，缩放后则差异减小，能够提高算法效果
+	
+	5、讨论
+	(1)光照发生变化的时候不合理？是不是得整体看光照是否发生变化，若发生变化，是不是可以加上一个针对光照的误差偏移量
+	(2)必然会有明显差异，窗口大小还是非常重要的，感觉图像块越大捕捉的光流越容易不准，但是对于相机运动速度快的可能适应性更好
+	(3)金字塔层数越多应该结果也是越准的，过渡更平滑，缩放倍率越小越平滑，但缩放倍率增大可以减少计算开销？
+	
+	见GenetaSLAM Project homework ch6 optical flow
+	
+	\section{3 直接法}
+	
+	1、单层直接法
+	(1)误差项是模板图像（前一时刻图像）和投影图像（当前图像）中像素灰度值之差，损失为二范数之和
+	(2)误差对于自变量的雅可比纬度误差是一个一维(1x1)的数据，自变量是一个是一个1x2的矩阵和2x6的矩阵的乘积，所以应该是一个1x6的矩阵
+	(3)在本代码中，窗口取的是4x4的patch，最大可以取到缩放之后顶层的金字塔，大窗口意味着计算量的急剧增加（需要遍历窗口图像内的每一个点），可以取单个点进行计算，但是无法利用区域内其它像素点的灰度值，这使算法极易受到光照的影响，具体来说，当两张要匹配的图像光照发生变化时，由于单点的灰度差发生显著变化，因此灰度不变假设失效，正确的匹配点不会被识别到，优化的相机位姿也会因此不正确，而窗口内的灰度全部变化后，灰度不变假设变为取一个窗口内变化的最小值，因此仍然能保持算法的正确性
+	2、多层直接法
+	
+	\section{3 *延伸讨论}
+	(1)可以，同样能够减小计算量，提高计算效率
+	(2)每个点的优化计算可以并行执行，充分利用多线程并行的性质，加速优化的进程
+	(3)参考图像（前一张图像）的一个patch和后一张图像对应的投影patch灰度值近似不变（最小化）
+	(4)直接法更多关注的是区域像素的亮度信息，注重的是图像整体的一致性，特征可以较为稠密，而特征点法注重的是图像的几何特征，是一种稀疏特征的方法
+	(5)直接法不太受光照等结构因素变化的影响，但是由于其是一种稠密特征的方法，需要的计算开销比较大，而特征点法计算开销比较小，但是受环境影响较大
+	
+	见GenetaSLAM Project homework ch6 direct method
+	
+	\section{4 *使用光流计算视差}
+	
+	见GenetaSLAM Project homework ch6 ICP
+	
+\end{document}

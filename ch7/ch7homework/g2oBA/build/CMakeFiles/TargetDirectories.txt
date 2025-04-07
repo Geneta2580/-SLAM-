@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch7/g2oBA/build/CMakeFiles/g2oBA.dir
+/home/geneta/Project/homework/ch7/g2oBA/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch7/g2oBA/build/CMakeFiles/rebuild_cache.dir

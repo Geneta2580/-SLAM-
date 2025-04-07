@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch6/optical_flow/build/CMakeFiles/optical_flow.dir
+/home/geneta/Project/homework/ch6/optical_flow/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch6/optical_flow/build/CMakeFiles/rebuild_cache.dir

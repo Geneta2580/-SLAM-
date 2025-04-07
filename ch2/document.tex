@@ -1,0 +1,88 @@
+\ExplSyntaxOn
+\cs_generate_variant:Nn \fp_set:Nn { NV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV }
+\ExplSyntaxOff
+
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, appendix, bm, graphicx, hyperref, mathrsfs, geometry, indentfirst, graphicx, diagbox}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=3cm}  % 修改页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+\titleformat{\section}[block]{\Large\bfseries}{\zhnum{section}.}{1em}{}[] 
+% \zhum中文编号 \arabic 数字编号
+
+\title{\vspace{-4cm}\bfseries{关于开题的一些想法}}
+\author{\large 庞骏翔 \quad ZY2417209}  % \quad 空格一个字符 \large 小四 \bfseries 黑体
+\date{}
+\linespread{1.5}  % 修改行距
+\setlength{\parindent}{2em} % 段首缩进两字符
+\begin{document}
+	
+	\pagestyle{plain}
+	\maketitle
+	\section{2 熟悉Eigen矩阵运算}
+	
+	3、任意复（实）矩阵A分解为正交（酉）矩阵Q和上三角阵R，解$Ax=b$，分解A，则$QRx=b$，解得$x=R^{-1}Q^{T}b$，Householder方法稳定且被广泛使用
+	（还有经典的Gram-Schmidt正交化方法）
+	
+	4、对于对称正定矩阵A分解为$A=LL^{T}$，L的对角线元素均为正数，L是下三角矩阵，解$Ax=b$，分解A，解$Ly=b$，解$L^{T}x=y$
+	
+	5、见GenetaSLAM Project homework ch2 涉及到Eigen库的使用，求解方程
+	
+	\section{3 几何运算练习}
+	
+	见GenetaSLAM Project homework ch2 涉及到Eigen库，基本的旋转以及平移的坐标变换
+	
+	\section{4 旋转的表达}
+	
+	1、略，旋转矩阵DCM必为正交阵，可以从DCM定义出发（那个坐标乘单位向量的坐标变换形式，转置求变换系下的坐标导出）
+	
+	2、虚部3d，实部1d
+	
+	3、
+	1. 首先回顾四元数的基本形式：
+
+	- 一个四元数\(q = \eta+\epsilon_x i+\epsilon_y j+\epsilon_z k\)，可以写成\(q=\left[\begin{array}{c}\eta\\\epsilon\end{array}\right]\)，其中\(\eta\in R\)，\(\epsilon = [\epsilon_x,\epsilon_y,\epsilon_z]^T\in R^3\)。对于单位四元数，有\(\eta^{2}+\epsilon^{T}\epsilon = 1\)。
+	
+	- 设\(q_1=\eta_1+\epsilon_1\)，\(q_2=\eta_2+\epsilon_2\)，根据四元数乘法规则：
+
+	- \(q_1\cdot q_2=(\eta_1+\epsilon_1)(\eta_2+\epsilon_2)=\eta_1\eta_2-\epsilon_1^{T}\epsilon_2+\eta_1\epsilon_2+\eta_2\epsilon_1+\epsilon_1\times\epsilon_2\)。
+
+	2. 然后计算\(q_1^{+}q_2\)：
+
+	- 已知\(q_1^{+}=\left[\begin{array}{cc}\eta_1 - \epsilon_1^{\times}&\epsilon_1\\-\epsilon_1^{T}&\eta_1\end{array}\right]\)，\(q_2=\left[\begin{array}{c}\eta_2\\\epsilon_2\end{array}\right]\)。
+
+	- 根据矩阵乘法：
+
+	- \(q_1^{+}q_2=\left[\begin{array}{cc}\eta_1 - \epsilon_1^{\times}&\epsilon_1\\-\epsilon_1^{T}&\eta_1\end{array}\right]\left[\begin{array}{c}\eta_2\\\epsilon_2\end{array}\right]=\left[\begin{array}{c}(\eta_1 - \epsilon_1^{\times})\eta_2+\epsilon_1\epsilon_2\\-\epsilon_1^{T}\eta_2+\eta_1\epsilon_2\end{array}\right]\)。
+
+	- 其中\(\epsilon_1^{\times}\)是\(\epsilon_1\)对应的反对 - 称矩阵，\((\epsilon_1^{\times})_{ij}=-\epsilon_{1k}\)（\((i,j,k)\)是\((1,2,3)\)的循环排列）。
+
+	- \((\eta_1 - \epsilon_1^{\times})\eta_2+\epsilon_1\epsilon_2=\eta_1\eta_2-\epsilon_1^{\times}\eta_2+\epsilon_1\epsilon_2=\eta_1\eta_2-\epsilon_1^{T}\epsilon_2+\eta_1\epsilon_2+\eta_2\epsilon_1+\epsilon_1\times\epsilon_2\)（利用反对称矩阵与向量乘法和叉乘的关系：\(\epsilon_1^{\times}\eta_2 =-\eta_2\epsilon_1-\epsilon_1\times\epsilon_2\)），\(-\epsilon_1^{T}\eta_2+\eta_1\epsilon_2\)也符合四元数乘法结果的向量部分形式，所以\(q_1\cdot q_2 = q_1^{+}q_2\)。
+	
+	3. 接着计算\(q_2^{\oplus}q_1\)：
+	
+	- 已知\(q_2^{\oplus}=\left[\begin{array}{cc}\eta_2+\epsilon_2^{\times}&\epsilon_2\\-\epsilon_2^{T}&\eta_2\end{array}\right]\)，\(q_1=\left[\begin{array}{c}\eta_1\\\epsilon_1\end{array}\right]\)。
+
+	- 根据矩阵乘法：
+	- \(q_2^{\oplus}q_1=\left[\begin{array}{cc}\eta_2+\epsilon_2^{\times}&\epsilon_2\\-\epsilon_2^{T}&\eta_2\end{array}\right]\left[\begin{array}{c}\eta_1\\\epsilon_1\end{array}\right]=\left[\begin{array}{c}(\eta_2+\epsilon_2^{\times})\eta_1+\epsilon_2\epsilon_1\\-\epsilon_2^{T}\eta_1+\eta_2\epsilon_1\end{array}\right]\)。
+
+	- 利用反对称矩阵与向量乘法和叉乘的关系\(\epsilon_2^{\times}\eta_1=-\eta_1\epsilon_2 - \epsilon_2\times\epsilon_1\)，可得\((\eta_2+\epsilon_2^{\times})\eta_1+\epsilon_2\epsilon_1=\eta_1\eta_2-\epsilon_1^{T}\epsilon_2+\eta_1\epsilon_2+\eta_2\epsilon_1+\epsilon_1\times\epsilon_2\)，\(-\epsilon_2^{T}\eta_1+\eta_2\epsilon_1\) 也符合四元数乘法结果的向量部分形式，所以\(q_1\cdot q_2 = q_2^{\oplus}q_1\)。
+	
+	综上，通过利用四元数乘法规则以及反对称矩阵与向量乘法和叉乘的关系，证明了对任意单位四元数\(q_1,q_2\)，\(q_1\cdot q_2 = q_1^{+}q_2\)和\(q_1\cdot q_2 = q_2^{\oplus}q_1\)成立。
+	
+	\section{5 罗德里格斯公式的证明}
+	
+	略
+
+	\section{6 四元数运算性质的验证}
+	
+	用第4题的结论，结合四元数的实部虚部既能得到结论
+	
+\end{document}

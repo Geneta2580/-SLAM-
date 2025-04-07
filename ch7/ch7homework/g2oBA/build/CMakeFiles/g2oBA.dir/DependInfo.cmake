@@ -1,0 +1,24 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/geneta/Project/homework/ch7/g2oBA/common.cpp" "CMakeFiles/g2oBA.dir/common.cpp.o" "gcc" "CMakeFiles/g2oBA.dir/common.cpp.o.d"
+  "/home/geneta/Project/homework/ch7/g2oBA/g2oBA.cpp" "CMakeFiles/g2oBA.dir/g2oBA.cpp.o" "gcc" "CMakeFiles/g2oBA.dir/g2oBA.cpp.o.d"
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_LINKED_INFO_FILES
+  )
+
+# Targets to which this target links which contain Fortran sources.
+set(CMAKE_Fortran_TARGET_FORWARD_LINKED_INFO_FILES
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

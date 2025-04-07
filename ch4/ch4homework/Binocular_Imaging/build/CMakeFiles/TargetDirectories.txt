@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch4/Binocular_Imaging/build/CMakeFiles/Binocular_Imaging.dir
+/home/geneta/Project/homework/ch4/Binocular_Imaging/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch4/Binocular_Imaging/build/CMakeFiles/rebuild_cache.dir

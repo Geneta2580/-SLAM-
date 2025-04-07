@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch4/GN/build/CMakeFiles/GN.dir
+/home/geneta/Project/homework/ch4/GN/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch4/GN/build/CMakeFiles/rebuild_cache.dir

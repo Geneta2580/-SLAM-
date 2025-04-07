@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch7/directBA/build/CMakeFiles/directBA.dir
+/home/geneta/Project/homework/ch7/directBA/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch7/directBA/build/CMakeFiles/rebuild_cache.dir

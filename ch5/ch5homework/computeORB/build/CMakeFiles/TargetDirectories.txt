@@ -1,0 +1,3 @@
+/home/geneta/Project/homework/ch5/computeORB/build/CMakeFiles/computeORB.dir
+/home/geneta/Project/homework/ch5/computeORB/build/CMakeFiles/edit_cache.dir
+/home/geneta/Project/homework/ch5/computeORB/build/CMakeFiles/rebuild_cache.dir

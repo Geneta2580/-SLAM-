@@ -1,0 +1,75 @@
+\ExplSyntaxOn
+\cs_generate_variant:Nn \fp_set:Nn { NV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV }
+\ExplSyntaxOff
+
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, appendix, bm, graphicx, hyperref, mathrsfs, geometry, indentfirst, graphicx, diagbox}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=3cm}  % 修改页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+\titleformat{\section}[block]{\Large\bfseries}{\zhnum{section}.}{1em}{}[] 
+% \zhum中文编号 \arabic 数字编号
+
+\title{\vspace{-4cm}\bfseries{CH3 HOMEWORK}}
+\author{\large 庞骏翔 \quad ZY2417209}  % \quad 空格一个字符 \large 小四 \bfseries 黑体
+\date{}
+\linespread{1.5}  % 修改行距
+\setlength{\parindent}{2em} % 段首缩进两字符
+\begin{document}
+	
+	\pagestyle{plain}
+	\maketitle
+	\section{2 群的性质}
+	
+	1、$\mathbb{Z}$对于加法封闭，且都符合群的性质
+	
+	2、$\mathbb{N}$对于加法封闭，但其不符合群的性质中逆元的性质
+	
+	\section{3 验证向量叉乘的李代数性质}
+	
+	略
+	
+	封闭性：设三维向量，,按照叉乘的定义进行运算得到结果仍属于$\mathbb{R}^{3}$即可
+	
+	双线性：设向量$a$、$b$、$c$，将李括号替换为叉乘进行运算即可
+	
+	自反性：按照叉乘计算自己叉乘自己即可
+	
+	雅可比等价：设向量$a$、$b$、$c$，将李括号替换为叉乘进行运算即可
+	
+	\section{4 推导 SE(3) 的指数映射}
+	
+	利用反对称矩阵乘幂的性质，将高次幂转为低次幂，注意$\phi=\theta a$，$\theta$为常数，$a$为单位向量，利用$\phi^{\wedge}=\theta a^{\wedge}$，展开即可
+	
+	\section{5 伴随}
+	
+	设\(\boldsymbol{a}=(a_x,a_y,a_z)^T\in\mathbb{R}^3\)，\(\boldsymbol{R}\in SO(3)\)，\(\boldsymbol{a}^{\wedge}=\begin{bmatrix}0& - a_z&a_y\\a_z&0& - a_x\\-a_y&a_x&0\end{bmatrix}\)是\(\boldsymbol{a}\)对应的反对称矩阵。
+	
+	对于任意向量\(\boldsymbol{v}\in\mathbb{R}^3\)，有：
+
+	\begin{align}
+		\boldsymbol{R}\boldsymbol{a}^{\wedge}\boldsymbol{R}^T\boldsymbol{v}&=\boldsymbol{R}(\boldsymbol{a}^{\wedge}(\boldsymbol{R}^T\boldsymbol{v}))\\
+		&=\boldsymbol{R}(\boldsymbol{a}\times(\boldsymbol{R}^T\boldsymbol{v}))
+	\end{align}
+	
+	根据向量叉乘的性质\(\boldsymbol{u}\times\boldsymbol{w} = -\boldsymbol{w}\times\boldsymbol{u}\)和旋转矩阵\(\boldsymbol{R}\)的性质（保持向量叉乘关系），\(\boldsymbol{R}(\boldsymbol{a}\times\boldsymbol{b})=(\boldsymbol{R}\boldsymbol{a})\times(\boldsymbol{R}\boldsymbol{b})\)，则：
+	\begin{align}
+		\boldsymbol{R}(\boldsymbol{a}\times(\boldsymbol{R}^T\boldsymbol{v}))&= (\boldsymbol{R}\boldsymbol{a})\times(\boldsymbol{R}\boldsymbol{R}^T\boldsymbol{v})\\
+		&=(\boldsymbol{R}\boldsymbol{a})\times\boldsymbol{v}\\
+		&= (\boldsymbol{R}\boldsymbol{a})^{\wedge}\boldsymbol{v}
+	\end{align}
+	
+	因为对于任意\(\boldsymbol{v}\in\mathbb{R}^3\)都成立，所以\(\boldsymbol{R}\boldsymbol{a}^{\wedge}\boldsymbol{R}^T = (\boldsymbol{R}\boldsymbol{a})^{\wedge}\)。
+	
+	\section{6 轨迹的描绘}
+	
+	见GenetaSLAM Project homework ch3
+	
+\end{document}

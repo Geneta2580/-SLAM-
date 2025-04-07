@@ -1,0 +1,79 @@
+\ExplSyntaxOn
+\cs_generate_variant:Nn \fp_set:Nn { NV }
+\cs_generate_variant:Nn \fp_gset:Nn { NV }
+\ExplSyntaxOff
+
+\documentclass[12pt, a4paper, oneside]{ctexart}
+\usepackage{amsmath, amsthm, amssymb, appendix, bm, graphicx, hyperref, mathrsfs, geometry, indentfirst, graphicx, diagbox}
+\geometry{a4paper,left=2cm,right=2cm,top=3cm,bottom=3cm}  % 修改页边距
+
+\usepackage{titlesec} %自定义多级标题格式的宏包
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+\titleformat{\section}[block]{\Large\bfseries}{\zhnum{section}.}{1em}{}[] 
+% \zhum中文编号 \arabic 数字编号
+
+\title{\vspace{-4cm}\bfseries{CH3 HOMEWORK}}
+\author{\large 庞骏翔 \quad ZY2417209}  % \quad 空格一个字符 \large 小四 \bfseries 黑体
+\date{}
+\linespread{1.5}  % 修改行距
+\setlength{\parindent}{2em} % 段首缩进两字符
+\begin{document}
+	
+	\pagestyle{plain}
+	\maketitle
+	\section{2 图像去畸变}
+	
+	见GenetaSLAM Project homework ch4 undistort
+	
+	把u、v先转化为归一化坐标，即将u、v增维坐标构成$\mathbb{R}^{3}$向量，然后左乘内参矩阵的逆，这样就得到了归一化坐标，再用多项式公式得到正确的归一化平面坐标，再增维用内参矩阵左乘得到再图像上的正确位置
+	
+	\section{3 双目视差的使用}
+	
+	见GenetaSLAM Project homework ch4 Binocular Imaging
+	
+	也是套公式的题，要注意的是视差是最难计算的，有了视差就可以计算Z，即物体到相机距离（远近），然后这里因为只有一个时刻的图像，所以实际可以把世界系和相机系重合（R=I,t=0），相当于T位姿矩阵为单位阵（这样理解右下角元素肯定为1了）
+	
+	\section{4 矩阵微分}
+
+	1、设 $\mathbf{x} = [x_1, x_2, \cdots, x_N]^T$，$\mathbf{A} = [a_{ij}]_{N\times N}$，
+	
+	则 $\mathbf{Ax} = \left[\sum_{j = 1}^{N}a_{1j}x_j, \sum_{j = 1}^{N}a_{2j}x_j, \cdots, \sum_{j = 1}^{N}a_{Nj}x_j\right]^T$。
+	
+	根据向量对向量求导的定义，$\frac{d(\mathbf{Ax})}{d\mathbf{x}}$ 的 $(i, j)$ 元素为 $\frac{\partial (\mathbf{Ax})_i}{\partial x_j}$。
+	
+	$(\mathbf{Ax})_i=\sum_{j = 1}^{N}a_{ij}x_j$，对 $x_j$ 求偏导得 $\frac{\partial (\mathbf{Ax})_i}{\partial x_j}=a_{ij}$。
+	
+	所以 $\frac{d(\mathbf{Ax})}{d\mathbf{x}}=\mathbf{A}$。
+	
+	
+	2、设 $\mathbf{x} = [x_1, x_2, \cdots, x_N]^T$，$\mathbf{A} = [a_{ij}]_{N\times N}$，
+	
+	则 $\mathbf{Ax} = \left[\sum_{j = 1}^{N}a_{1j}x_j, \sum_{j = 1}^{N}a_{2j}x_j, \cdots, \sum_{j = 1}^{N}a_{Nj}x_j\right]^T$。
+	
+	根据向量对向量求导的定义，$\frac{d(\mathbf{Ax})}{d\mathbf{x}}$ 的 $(i, j)$ 元素为 $\frac{\partial (\mathbf{Ax})_i}{\partial x_j}$。
+	
+	$(\mathbf{Ax})_i=\sum_{j = 1}^{N}a_{ij}x_j$，对 $x_j$ 求偏导得 $\frac{\partial (\mathbf{Ax})_i}{\partial x_j}=a_{ij}$。
+	所以 $\frac{d(\mathbf{Ax})}{d\mathbf{x}}=\mathbf{A}$。
+	
+	
+	3、设 $\mathbf{x} = [x_1, x_2, \cdots, x_N]^T$，$\mathbf{A} = [a_{ij}]_{N\times N}$。
+	
+	- 左边：$\mathbf{x}\mathbf{A}^T\mathbf{x}=\sum_{i = 1}^{N}\sum_{j = 1}^{N}x_ia_{ji}x_j$。
+	
+	- 右边：$\mathbf{A}\mathbf{x}\mathbf{x}^T$ 是一个 $N\times N$ 的矩阵，$(\mathbf{A}\mathbf{x}\mathbf{x}^T)_{ii}=\sum_{j = 1}^{N}a_{ij}x_jx_i$。
+	则 $\text{tr}(\mathbf{A}\mathbf{x}\mathbf{x}^T)=\sum_{i = 1}^{N}(\mathbf{A}\mathbf{x}\mathbf{x}^T)_{ii}=\sum_{i = 1}^{N}\sum_{j = 1}^{N}a_{ij}x_jx_i$。
+	
+	由于 $\sum_{i = 1}^{N}\sum_{j = 1}^{N}x_ia_{ji}x_j=\sum_{i = 1}^{N}\sum_{j = 1}^{N}a_{ij}x_jx_i$，
+	
+	所以 $\mathbf{x}\mathbf{A}^T\mathbf{x}=\text{tr}(\mathbf{A}\mathbf{x}\mathbf{x}^T)$ 得证。
+	
+	\section{5 高斯牛顿法的曲线拟合实验}
+	
+	见GenetaSLAM Project homework ch4 GN
+	
+\end{document}
